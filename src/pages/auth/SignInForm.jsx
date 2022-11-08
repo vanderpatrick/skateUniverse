@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -15,10 +15,10 @@ import btnStyles from "../../styles/misc/Button.module.css";
 import appStyles from "../../App.module.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { SetCurrentUserContext } from "../../App";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 function SignInForm() {
-  const setCurrentUser = useContext(SetCurrentUserContext)
+  const setCurrentUser = useSetCurrentUser();
 
   const [SignInData, setSignInData] = useState({
     username: "",
@@ -38,8 +38,8 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const {data} = await axios.post("/dj-rest-auth/login/", SignInData);
-      setCurrentUser(data.user)
+      const { data } = await axios.post("/dj-rest-auth/login/", SignInData);
+      setCurrentUser(data.user);
       history.push("/");
     } catch (err) {
       setErrors(err.response?.data);
@@ -52,7 +52,7 @@ function SignInForm() {
         <Container className={`${appStyles.Content} p-4 `}>
           <h1 className={styles.Header}>sign in</h1>
           <Form onSubmit={handleSubmit}>
-            <Form.Group  controlId="username">
+            <Form.Group controlId="username">
               <Form.Label className="d-none">username</Form.Label>
               <Form.Control
                 className={`${styles.Input} mt-3`}
@@ -79,7 +79,7 @@ function SignInForm() {
                 onChange={handleChange}
               />
               {errors.password?.map((message, idx) => (
-                <Alert  variant="warning" key={idx}>
+                <Alert variant="warning" key={idx}>
                   {message}
                 </Alert>
               ))}
