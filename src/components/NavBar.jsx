@@ -3,11 +3,47 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
-import { useCurrentUser} from "../contexts/CurrentUserContext";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
+import Avatar from "./Avatar";
 
 const NavBar = () => {
-  const currentUser = useCurrentUser()
-  const loggedinIcons = <>{currentUser?.username}</>
+  const currentUser = useCurrentUser();
+  const loggedinIcons = (
+    <>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/feed"
+      >
+        <i className="fas fa-stream">Feed</i>
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/liked"
+      >
+        <i className="fas fa-heart">Liked</i>
+      </NavLink>
+      <NavLink className={styles.NavLink} to="/" onClick={() => {}}>
+        <i className="fas fa-sign-out-alt">Sign Out</i>
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        to={`/profiles/${currentUser?.profile_id}`}
+      >
+        <Avatar src={currentUser?.profile_image} text="Profile" height={40} />
+      </NavLink>
+    </>
+  );
+  const addPostIcon = (
+    <NavLink
+      className={styles.NavLink}
+      activeClassName={styles.Active}
+      to="/posts/create"
+    >
+      <i className="fas fa-plus-square">add post</i>
+    </NavLink>
+  );
   const loggedOutIcons = (
     <>
       <NavLink
@@ -34,16 +70,17 @@ const NavBar = () => {
             <img src={logo} alt="logo" height="90" />
           </Navbar.Brand>
         </NavLink>
+        {currentUser && addPostIcon}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto text-center">
             <NavLink
-              exact
+            exact
               className={styles.NavLink}
               activeClassName={styles.Active}
-              to="/"
+              to="/feed"
             >
-              <i className="fas fa-home"></i>Home
+              <i className="fas fa-home">Home</i>
             </NavLink>
             {currentUser ? loggedinIcons : loggedOutIcons}
           </Nav>
