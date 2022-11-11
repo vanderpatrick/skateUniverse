@@ -1,4 +1,3 @@
-import { data } from "msw/lib/types/context";
 import React from "react";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -21,7 +20,7 @@ const Post = (props) => {
     image,
     updated_at,
     postPage,
-    setPost,
+    setPosts,
   } = props;
 
   const currentUser = useCurrentUser();
@@ -30,11 +29,11 @@ const Post = (props) => {
   const handleLike = async () => {
     try {
       const { data } = await axiosRes.post("/likes/", { post: id });
-      setPost((prevPosts) => ({
+      setPosts((prevPosts) => ({
         ...prevPosts,
         results: prevPosts.results.map((post) => {
           return post.id === id
-            ? { ...post, like_count: post.likes_count + 1, like_id: data.id }
+            ? { ...post, like_count: post.like_count + 1, like_id: data.id }
             : post;
         }),
       }));
@@ -45,12 +44,12 @@ const Post = (props) => {
 
   const handleUnlike = async () => {
     try {
-      await axiosRes.delete(`/likes/${like_id}/`);
-      setPost((prevPosts) => ({
+      await axiosRes.delete(`/likes/${like_id}`);
+      setPosts((prevPosts) => ({
         ...prevPosts,
         results: prevPosts.results.map((post) => {
           return post.id === id
-            ? { ...post, likes_count: post.likes_count - 1, like_id: null }
+            ? { ...post, like_count: post.like_count - 1, like_id: null }
             : post;
         }),
       }));
@@ -88,7 +87,7 @@ const Post = (props) => {
               <i className="far fa-heart" />
             </OverlayTrigger>
           ) : like_id ? (
-            <span onClick={() => {}}>
+            <span onClick={handleUnlike}>
               <i className={`fas fa-heart ${styles.Heart}`} />
             </span>
           ) : currentUser ? (
