@@ -5,8 +5,8 @@ import { Route, Switch } from "react-router-dom";
 import SignUpForm from "./pages/auth/SignUpForm";
 import "./api/axiosDefaults";
 import SignInForm from "./pages/auth/SignInForm";
-import PostCreateForm from "./pages/auth/posts/PostCreate";
-import PostPage from "./pages/auth/posts/PostPage";
+import PostCreateForm from "./pages/posts/PostCreate";
+import PostPage from "./pages/posts/PostPage";
 
 function App() {
   return (

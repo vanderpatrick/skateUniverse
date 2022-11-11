@@ -6,14 +6,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
-import Upload from "../../../assets/upload.png";
+import Upload from "../../assets/upload.png";
 
-import styles from "../../../styles/creation/PostCreateEditForm.module.css";
-import btnStyles from "../../../styles/misc/Button.module.css";
-import appStyles from "../../../App.module.css";
+import styles from "../../styles/creation/PostCreateEditForm.module.css";
+import btnStyles from "../../styles/misc/Button.module.css";
+import appStyles from "../../App.module.css";
 import { Image } from "react-bootstrap";
-import Asset from "../../../components/Asset";
-import { axiosReq } from "../../../api/axiosDefaults";
+import Asset from "../../components/Asset";
+import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 function PostCreateForm() {
